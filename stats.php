@@ -5,9 +5,11 @@ function htmlStart(){
 	<title>Foosball Stats</title>
 	<link rel="stylesheet" type="text/css" href="/foosballStats/style.css"/>
 	</head>
-	<body>
-	
-	<div id="loadstats">
+	<body>';
+}
+
+function scoreForms(){
+	echo '<div id="loadstats">
 	<form action="" method="post" enctype="multipart/form-data">
 	Enter Score:<br/>
 	<label for="personOne">Person: </label>
@@ -55,7 +57,7 @@ function dbClose($con){
 }
 
 function reloadRankings(){
-	echo "<br/><br/><div id='rankings'>";
+	echo "<div id='rankings'>";
 	echo "<table><tr><th>Rank</th><th>Player</th><th>GF/G</th></tr>";
 	$con=dbOpen();
 	$result = mysql_query('SELECT * FROM players ORDER BY GF_G DESC, PID ASC',$con);
@@ -125,6 +127,7 @@ function uploadInsert($line){
 
 htmlStart();
 reloadRankings();
+scoreForms();
 if ($_POST['singleEntry']) {
 	uploadInsert($_POST['personOne'].','.$_POST['scoreOne'].','.$_POST['personTwo'].','.$_POST['scoreTwo']);
 }
