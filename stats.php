@@ -41,7 +41,8 @@ function htmlEnd(){
 }
 
 function dbOpen(){
-	$con=mysql_connect("localhost","","");
+	
+	$con=mysql_connect("127.0.0.1","","");
 	if (!$con)
 	{
 		die('Could not connect: ' . mysql_error());
@@ -82,15 +83,19 @@ function uploadInsert($line){
 	$playerTwo=ucfirst(strtolower($playerTwo));
 	if($playerOne==null||$scoreOne==null||$playerTwo==null||$scoreTwo==null){
 		echo "<span class='error'>Null value: ".$line."</span><br/>";
+		return "null value";
 	}
 	elseif(preg_match("/\D/",$scoreOne)||preg_match("/\D/",$scoreTwo)){
 		echo "<span class='error'>Invalid score: ".$line."</span><br />";
+		return "score not a number";
 	}
 	elseif(strcmp($playerOne, $playerTwo)==0){
 		echo "<span class='error'>You can't play yourself silly!: ".$line."</span><br />";
+		return "pone equals ptwo";
 	}
 	elseif($scoreOne==$scoreTwo){
 		echo "<span class='error'>Can't have a tie in foosball!: ".$line."</span><br />";
+		return "tie game";
 	}
 	else{
 		$con=dbOpen();
@@ -128,6 +133,34 @@ function uploadInsert($line){
 
 }
 
+function processFile(){
+	if ($_FILES["file"]["error"] > 0){
+		echo "<span class='error'>Error: " . $_FILES["file"]["error"] . "</span><br />";
+		return "null file";
+	}
+	elseif ($_FILES["file"]["type"]!="text/csv"){
+		echo "<span class='error'>File type must be csv</span><br />";
+		return "not csv";
+	}
+	else{
+		$file=fopen($_FILES["file"]["tmp_name"],'r');
+		$line=fgets($file);
+		if(ereg($line,"[0-9]")){
+				uploadInsert($line);
+		}
+		else{
+			echo "<span class='error'>Ignoring header line: ".$line."</span><br />";
+			$error="header line";
+		}
+		while (!feof($file)){
+			$line=fgets($file);
+			uploadInsert(rtrim($line));
+		}
+		fclose($file);
+		return $error;
+	}
+}
+
 htmlStart();
 ?>
 <div class="errorContainer">
@@ -137,27 +170,7 @@ if ($_POST['singleEntry']) {
 }
 
 if ($_POST['multiEntry']) {
-	if ($_FILES["file"]["error"] > 0){
-		echo "<span class='error'>Error: " . $_FILES["file"]["error"] . "</span><br />";
-	}
-	elseif ($_FILES["file"]["type"]!="text/csv"){
-		echo "<span class='error'>File type must be csv</span><br />";
-	}
-	else{
-		$file=fopen($_FILES["file"]["tmp_name"],'r');
-		$line=fgets($file);
-		if(ereg($line,"[0-9]")){
-			uploadInsert($line);
-		}
-		else{
-			echo "<span class='error'>Ignoring header line: ".$line."</span><br />";
-		}
-		while (!feof($file)){
-			$line=fgets($file);
-			uploadInsert(rtrim($line));
-		}
-		fclose($file);
-	}
+	processFile();
 }
 ?>
 </div>
