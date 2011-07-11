@@ -145,8 +145,8 @@ function processFile(){
 	else{
 		$file=fopen($_FILES["file"]["tmp_name"],'r');
 		$line=fgets($file);
-		if(ereg($line,"[0-9]")){
-				uploadInsert($line);
+		if(preg_match("/\d/",$line)){
+				uploadInsert(rtrim($line));
 		}
 		else{
 			echo "<span class='error'>Ignoring header line: ".$line."</span><br />";
@@ -163,7 +163,7 @@ function processFile(){
 
 htmlStart();
 ?>
-<div class="errorContainer">
+<div class='errorContainer'>
 <?php
 if ($_POST['singleEntry']) {
 	uploadInsert($_POST['personOne'].','.$_POST['scoreOne'].','.$_POST['personTwo'].','.$_POST['scoreTwo']);
