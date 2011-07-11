@@ -10,22 +10,25 @@ function htmlStart(){
 
 function scoreForms(){
 	echo '<div id="loadstats">
-	<form action="" method="post" enctype="multipart/form-data">
-	Enter Score:<br/>
+	<form id="simple" action="" method="post" enctype="multipart/form-data">
+	Enter Score:<br/><br/>
 	<label for="personOne">Person: </label>
 	<input type="text" name="personOne" id="personOne"/>
 	<label for="scoreOne">Score: </label>
 	<input type="text" name="scoreOne" id="scoreOne"/>
+	<br/>
 	VS
+	<br/>
 	<label for="personTwo">Person: </label>
 	<input type="text" name="personTwo" id="personTwo"/>
 	<label for="scoreTwo">Score: </label>
 	<input type="text" name="scoreTwo" id="scoreTwo"/>
+	<br/><br/>
 	<input type="submit" name="singleEntry" value="Submit"/>
 	</form>
 	
-	<form action="" method="post" enctype="multipart/form-data">
-	<label for="file">Upload a .csv file with the format Person,Score,Person,Score:</label>
+	<form id="multi" action="" method="post" enctype="multipart/form-data">
+	<label for="file">Or upload a .csv file with the format Person,Score,Person,Score:</label><br/><br/>
 	<input type="file" name="file" id="file" />
 	<input type="submit" name="multiEntry" value="Submit" />
 	</form>
@@ -126,8 +129,9 @@ function uploadInsert($line){
 }
 
 htmlStart();
-reloadRankings();
-scoreForms();
+?>
+<div class="errorContainer">
+<?php
 if ($_POST['singleEntry']) {
 	uploadInsert($_POST['personOne'].','.$_POST['scoreOne'].','.$_POST['personTwo'].','.$_POST['scoreTwo']);
 }
@@ -155,5 +159,10 @@ if ($_POST['multiEntry']) {
 		fclose($file);
 	}
 }
+?>
+</div>
+<?php
+reloadRankings();
+scoreForms();
 htmlEnd();
 ?>
