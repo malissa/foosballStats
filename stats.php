@@ -30,6 +30,7 @@ function scoreForms(){
 	<input type="file" name="file" id="file" />
 	<input type="submit" name="multiEntry" value="Submit" />
 	</form>
+	
 	<!--
 	<form id="searchGames" action="playerList.php" enctype="multipart/form-data">
 	<h4>Look-up game history by player:</h4>
@@ -37,6 +38,7 @@ function scoreForms(){
 	<input type="submit" name="search" value="Search" />
 	</form>
 	-->
+	
 	</div>';	
 }
 
