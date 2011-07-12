@@ -1,2 +1,15 @@
-Sophie,10,Molly,0
-Molly,6,Stella,10
+Person,Score,Person,Score
+Amos,4,Diego,5
+Amos,1,Diego,5
+Amos,2,Diego,5
+Amos,0,Diego,5
+Amos,6,Diego,5
+Amos,5,Diego,2
+Amos,4,Diego,0
+Joel,4,Diego,5
+Tim,4,Amos,5
+Tim,5,Amos,2
+Amos,3,Tim,5
+Amos,5,Tim,3
+Amos,5,Joel,4
+Joel,5,Tim,2

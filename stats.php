@@ -11,14 +11,12 @@ function htmlStart(){
 function scoreForms(){
 	echo '<div id="loadstats">
 	<form id="simple" action="" method="post" enctype="multipart/form-data">
-	Enter Score:<br/><br/>
+	<h4>Enter Score:</h4>
 	<label for="personOne">Person: </label>
 	<input type="text" name="personOne" id="personOne"/>
 	<label for="scoreOne">Score: </label>
 	<input type="text" name="scoreOne" id="scoreOne"/>
-	<br/>
-	VS
-	<br/>
+	<h5>VS</h5>
 	<label for="personTwo">Person: </label>
 	<input type="text" name="personTwo" id="personTwo"/>
 	<label for="scoreTwo">Score: </label>
@@ -28,11 +26,17 @@ function scoreForms(){
 	</form>
 	
 	<form id="multi" action="" method="post" enctype="multipart/form-data">
-	<label for="file">Or upload a .csv file with the format Person,Score,Person,Score:</label><br/><br/>
+	<h4>Or upload a .csv file with the format Person,Score,Person,Score:</h4>
 	<input type="file" name="file" id="file" />
 	<input type="submit" name="multiEntry" value="Submit" />
 	</form>
-	
+	<!--
+	<form id="searchGames" action="playerList.php" enctype="multipart/form-data">
+	<h4>Look-up game history by player:</h4>
+	<input type="text" name="pSearch" id="pSearch" />
+	<input type="submit" name="search" value="Search" />
+	</form>
+	-->
 	</div>';	
 }
 
